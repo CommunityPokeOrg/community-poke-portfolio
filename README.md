@@ -7,8 +7,21 @@ showcasing Community Poke projects, tools, and lore.
 ## What this is
 
 The source code and backup/mirror plan for the Community Poke portfolio site:
-a single page that catalogs the games, projects, and open-source repos produced
-by the Poke Community.
+a single-page, dark terminal/HUD experience that catalogs the games, projects
+and open-source repos produced by the Poke Community, plus:
+
+- **Lore Archive** — an explorable timeline of server lore. Every record is
+  labelled `verified` (links to repository history) or `curated` (server canon
+  retold from the Discord).
+- **Quip Reel** — a soundboard-style reel of lines quoted verbatim from public
+  READMEs. Sound is synthesised with the Web Audio API, opt-in, off by default.
+- **Stats & Hall of Fame** — repository telemetry hydrated from the public
+  GitHub API with a bundled snapshot fallback, commit authors, badges and
+  milestones.
+
+Keyboard: `1`–`4` jump between sections; arrow keys / `Home` / `End` walk the
+Lore Archive; `←`/`→`, `Space` and `s` drive the Quip Reel. Deep-link a lore
+record with `#lore/<id>`. `prefers-reduced-motion` is honoured throughout.
 
 ## Live target site
 
@@ -62,7 +75,6 @@ to import it here.
 | --- | --- |
 | [CommunityPoke/hivemind-public](https://github.com/CommunityPoke/hivemind-public) | PIP v1 / MCP server |
 | [CommunityPoke/hivemind](https://github.com/CommunityPoke/hivemind) | The Hivemind monorepo |
-| [CommunityPoke/Caelestis](https://github.com/CommunityPoke/Caelestis) | wplace overlay userscript |
 | [CommunityPokeOrg/poke-hermes-agent-bridge](https://github.com/CommunityPokeOrg/poke-hermes-agent-bridge) | Agent bridge |
 | [CommunityPokeOrg/smart-email-tracker](https://github.com/CommunityPokeOrg/smart-email-tracker) | Email tracking |
 | [CommunityPokeOrg/sheet-schema-editor](https://github.com/CommunityPokeOrg/sheet-schema-editor) | Sheet schema editor |
@@ -83,14 +95,25 @@ by a dedicated Devin.
 ## Repository layout
 
 ```
-├── BACKUP_PLAN.md         # how to import/mirror the real codebase
-├── index.html             # Vite entry
-├── package.json
+├── BACKUP_PLAN.md            # how to import/mirror the real codebase
+├── .github/workflows/deploy.yml
+├── index.html                # Vite entry
+├── public/                   # favicon, .nojekyll
 ├── src/
-│   ├── App.tsx            # portfolio grid
-│   ├── data/projects.ts   # project catalog (edit this to add entries)
-│   ├── main.tsx
-│   └── style.css
+│   ├── App.tsx               # section composition + error boundaries
+│   ├── components/           # Nav, Hero, Projects, LoreArchive, QuipReel, Stats, Footer
+│   ├── data/
+│   │   ├── projects.ts       # project catalog (edit this to add entries)
+│   │   ├── lore.ts           # Lore Archive records (verified | curated)
+│   │   ├── quips.ts          # Quip Reel lines, each with a source link
+│   │   ├── hallOfFame.ts     # repo snapshot, members, badges, milestones
+│   │   ├── site.ts           # site metadata, nav, values
+│   │   └── data.test.ts      # data integrity tests
+│   ├── hooks/useSound.ts     # opt-in Web Audio cues
+│   ├── lib/github.ts         # public API hydration with snapshot fallback
+│   └── styles/               # tokens.css (design tokens), base.css
+├── eslint.config.js
+├── vitest.config.ts
 └── tsconfig.json
 ```
 
@@ -98,8 +121,19 @@ by a dedicated Devin.
 
 ```bash
 npm install
-npm run dev      # dev server
-npm run build    # typecheck + production build to dist/
+npm run dev        # dev server
+npm run typecheck  # tsc --noEmit
+npm run lint       # eslint
+npm run test       # vitest (data integrity)
+npm run build      # typecheck + production build to dist/
+npm run check      # all of the above
+```
+
+To preview the exact GitHub Pages build locally:
+
+```bash
+VITE_BASE=/community-poke-portfolio/ npm run build && npx vite preview
+# → http://localhost:4173/community-poke-portfolio/
 ```
 
 ## Deploying
@@ -139,7 +173,12 @@ codebase once it becomes accessible, and how to keep this repo in sync.
 
 ## Contributing
 
-Edit `src/data/projects.ts` to add or update portfolio entries. PRs welcome —
+Edit the files under `src/data/` to add or update content — `projects.ts` for
+the catalog, `lore.ts` for archive records, `quips.ts` for the reel,
+`hallOfFame.ts` for stats. Mark anything you cannot point a commit or README
+at as `curated`; `npm test` enforces that verified entries link to
+Community Poke sources. Only Community Poke server material belongs here —
+not personal projects that merely appear in repository history. PRs welcome —
 governance is vibes with code review.
 
 ## License

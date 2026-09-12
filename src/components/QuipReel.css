@@ -1,0 +1,281 @@
+.reel {
+  --accent: var(--violet);
+  --accent-dim: var(--violet-dim);
+}
+
+.reel__sound .btn[aria-pressed="true"] {
+  border-color: var(--phosphor);
+  color: var(--phosphor);
+  box-shadow: 0 0 18px var(--phosphor-dim);
+}
+
+.reel__tones {
+  margin-bottom: var(--sp-5);
+}
+
+.reel__count {
+  opacity: 0.55;
+  margin-left: 0.3em;
+}
+
+.reel__stage {
+  --tone: var(--violet);
+  --tone-dim: var(--violet-dim);
+  position: relative;
+  display: grid;
+  gap: var(--sp-5);
+  padding: var(--sp-6);
+  min-height: 22rem;
+  overflow: hidden;
+  transition: box-shadow var(--dur), border-color var(--dur);
+}
+
+.reel__stage:focus-visible {
+  box-shadow: var(--focus), 0 0 40px var(--tone-dim);
+}
+
+.reel__stage--dry {
+  --tone: var(--cyan);
+  --tone-dim: color-mix(in oklab, var(--cyan) 18%, transparent);
+}
+
+.reel__stage--chaos {
+  --tone: var(--coral);
+  --tone-dim: var(--coral-dim);
+}
+
+.reel__stage--warm {
+  --tone: var(--amber);
+  --tone-dim: var(--amber-dim);
+}
+
+.reel__stage--ominous {
+  --tone: var(--violet);
+  --tone-dim: var(--violet-dim);
+}
+
+.reel__stage::after {
+  content: "";
+  position: absolute;
+  inset: auto -20% -60% -20%;
+  height: 70%;
+  background: radial-gradient(ellipse at center, var(--tone-dim), transparent 70%);
+  opacity: 0.8;
+  pointer-events: none;
+  transition: background var(--dur-slow);
+}
+
+.reel__meter {
+  display: flex;
+  gap: 3px;
+  height: 22px;
+  align-items: flex-end;
+}
+
+.reel__bar {
+  flex: 1;
+  height: 30%;
+  background: var(--tone);
+  opacity: 0.5;
+  border-radius: 1px;
+  transform-origin: bottom;
+  animation: meter 1.6s ease-in-out infinite;
+  animation-delay: calc(var(--i) * -0.11s);
+}
+
+.reel__bar--a {
+  animation-duration: 1.4s;
+}
+
+@keyframes meter {
+  0%,
+  100% {
+    transform: scaleY(0.4);
+  }
+  50% {
+    transform: scaleY(2.6);
+    opacity: 0.9;
+  }
+}
+
+.reel__body {
+  position: relative;
+  z-index: 1;
+  min-height: 9rem;
+  display: grid;
+  align-items: center;
+}
+
+.reel__quote {
+  margin: 0;
+}
+
+.reel__text {
+  font-family: var(--font-sans);
+  font-size: var(--fs-2);
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--fg-0);
+  text-wrap: balance;
+}
+
+.reel__text::before {
+  content: "“";
+  color: var(--tone);
+  margin-right: 0.1em;
+}
+
+.reel__text::after {
+  content: "”";
+  color: var(--tone);
+  margin-left: 0.1em;
+}
+
+.reel__attrib {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--sp-3);
+  margin-top: var(--sp-4);
+  font-size: var(--fs--1);
+  color: var(--fg-2);
+}
+
+.reel__speaker {
+  color: var(--fg-1);
+}
+
+.reel__tone--dry {
+  color: var(--cyan);
+}
+
+.reel__tone--chaos {
+  color: var(--coral);
+}
+
+.reel__tone--warm {
+  color: var(--amber);
+}
+
+.reel__tone--ominous {
+  color: var(--violet);
+}
+
+.reel__controls {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--sp-3);
+}
+
+.reel__transport {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+}
+
+.reel__play[aria-pressed="true"] {
+  border-color: var(--tone);
+  color: var(--tone);
+}
+
+.reel__position {
+  font-size: var(--fs--1);
+  color: var(--fg-2);
+  letter-spacing: 0.1em;
+}
+
+.reel__progress {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--line);
+}
+
+.reel__progress-bar {
+  display: block;
+  height: 100%;
+  width: 0;
+  background: var(--tone);
+  box-shadow: 0 0 10px var(--tone);
+  animation-name: progress;
+  animation-timing-function: linear;
+  animation-fill-mode: forwards;
+}
+
+.reel__progress-bar--static {
+  width: 100%;
+  opacity: 0.5;
+}
+
+@keyframes progress {
+  to {
+    width: 100%;
+  }
+}
+
+.reel__dots {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--sp-2);
+  list-style: none;
+  margin: var(--sp-4) 0 0;
+  padding: 0;
+}
+
+.reel__dot {
+  --c: var(--violet);
+  width: 26px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--line-strong);
+  transition: background var(--dur-fast), transform var(--dur-fast), box-shadow var(--dur-fast);
+}
+
+.reel__dot--dry {
+  --c: var(--cyan);
+}
+
+.reel__dot--chaos {
+  --c: var(--coral);
+}
+
+.reel__dot--warm {
+  --c: var(--amber);
+}
+
+.reel__dot:hover {
+  background: var(--fg-2);
+}
+
+.reel__dot[aria-current="true"] {
+  background: var(--c);
+  box-shadow: 0 0 10px var(--c);
+  transform: scaleX(1.25);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reel__bar {
+    animation: none;
+    height: 45%;
+  }
+
+  .reel__dot[aria-current="true"] {
+    transform: none;
+  }
+}
+
+@media (max-width: 40rem) {
+  .reel__stage {
+    padding: var(--sp-5);
+  }
+
+  .reel__text {
+    font-size: var(--fs-1);
+  }
+}

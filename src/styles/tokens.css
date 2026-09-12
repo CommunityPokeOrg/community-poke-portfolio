@@ -1,0 +1,71 @@
+:root {
+  color-scheme: dark;
+
+  /* palette — cyber-minimalist: near-black slate, phosphor green, amber warning, violet accent */
+  --bg-0: #07090d;
+  --bg-1: #0b0f16;
+  --bg-2: #10161f;
+  --bg-3: #161e2a;
+  --line: rgba(148, 178, 210, 0.12);
+  --line-strong: rgba(148, 178, 210, 0.28);
+
+  --fg-0: #e8f0f8;
+  --fg-1: #aebccb;
+  --fg-2: #718096;
+  --fg-3: #4a5568;
+
+  --phosphor: #7cffb2;
+  --phosphor-dim: rgba(124, 255, 178, 0.14);
+  --amber: #ffc857;
+  --amber-dim: rgba(255, 200, 87, 0.14);
+  --violet: #b48cff;
+  --violet-dim: rgba(180, 140, 255, 0.14);
+  --coral: #ff7a90;
+  --coral-dim: rgba(255, 122, 144, 0.14);
+  --cyan: #62d6ff;
+
+  --accent: var(--phosphor);
+  --accent-dim: var(--phosphor-dim);
+
+  /* type */
+  --font-mono: "JetBrains Mono", "Fira Code", "SFMono-Regular", ui-monospace, Menlo, Consolas, monospace;
+  --font-sans: "Inter", "SF Pro Text", ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+
+  --fs--2: clamp(0.66rem, 0.63rem + 0.15vw, 0.74rem);
+  --fs--1: clamp(0.78rem, 0.74rem + 0.2vw, 0.88rem);
+  --fs-0: clamp(0.95rem, 0.9rem + 0.25vw, 1.08rem);
+  --fs-1: clamp(1.15rem, 1.05rem + 0.5vw, 1.4rem);
+  --fs-2: clamp(1.45rem, 1.25rem + 1vw, 2rem);
+  --fs-3: clamp(2rem, 1.5rem + 2.5vw, 3.6rem);
+  --fs-4: clamp(2.6rem, 1.6rem + 5vw, 6rem);
+
+  /* spacing & shape */
+  --sp-1: 0.25rem;
+  --sp-2: 0.5rem;
+  --sp-3: 0.75rem;
+  --sp-4: 1rem;
+  --sp-5: 1.5rem;
+  --sp-6: 2rem;
+  --sp-7: 3rem;
+  --sp-8: 5rem;
+  --radius: 6px;
+  --radius-lg: 12px;
+  --content: 72rem;
+
+  /* motion */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --dur-fast: 140ms;
+  --dur: 260ms;
+  --dur-slow: 600ms;
+
+  --glow: 0 0 0 1px var(--accent-dim), 0 0 24px -6px var(--accent);
+  --focus: 0 0 0 2px var(--bg-0), 0 0 0 4px var(--accent);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --dur-fast: 0ms;
+    --dur: 0ms;
+    --dur-slow: 0ms;
+  }
+}
