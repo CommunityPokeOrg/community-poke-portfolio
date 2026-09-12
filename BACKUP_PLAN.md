@@ -2,9 +2,12 @@
 
 This repo exists because `portfolio.community.poke.site` had no reachable code
 when it was created (the domain resolves to Vercel but returns
-`404 DEPLOYMENT_NOT_FOUND`). This document describes how to import the real
-codebase once it becomes accessible, and how to keep this repo in sync
-afterward.
+`404 DEPLOYMENT_NOT_FOUND`). No Vercel/Poke credentials are available, so the
+live site is hosted on **GitHub Pages**
+(`communitypokeorg.github.io/community-poke-portfolio`); Vercel here is only
+relevant as the *source* of the original deployment, not the live path. This
+document describes how to import the real codebase once it becomes accessible,
+and how to keep this repo in sync afterward.
 
 ## Step 0 — confirm the source is reachable
 

@@ -12,12 +12,17 @@ by the Poke Community.
 
 ## Live target site
 
-The site is intended to live at **https://portfolio.community.poke.site**.
+The site is live at **https://communitypokeorg.github.io/community-poke-portfolio/**
+(GitHub Pages, auto-deployed from `main` — see [Deploying](#deploying)). The
+custom domain **https://portfolio.community.poke.site** remains the long-term
+target.
 
-**Status (as of 2026-09-12):** the domain resolves to Vercel but has **no live
-deployment** — it returns `404 DEPLOYMENT_NOT_FOUND` over plain HTTP and has no
-TLS certificate. This repository is therefore a **scaffold + backup plan**:
-no existing code was imported because none was accessible. Once the real
+**Status (as of 2026-09-12):** `portfolio.community.poke.site` resolves to
+Vercel but has **no live deployment** — it returned `404 DEPLOYMENT_NOT_FOUND`
+over plain HTTP with no TLS certificate. No Vercel/Poke hosting credentials
+are available to this project, so the site is hosted on **GitHub Pages**
+instead. This repository is therefore a **scaffold + backup plan**: no
+existing code was imported because none was accessible. Once the real
 deployment's code becomes reachable, follow [BACKUP_PLAN.md](BACKUP_PLAN.md)
 to import it here.
 
@@ -99,13 +104,33 @@ npm run build    # typecheck + production build to dist/
 
 ## Deploying
 
-This is a static Vite site — deploy the `dist/` output anywhere. For the
-canonical home:
+The site auto-deploys to **GitHub Pages** on every push to `main` via
+`.github/workflows/deploy.yml`:
 
-1. Import this repo into the Poke-hosted **Vercel** project (build command
-   `npm run build`, output directory `dist`).
-2. Point `portfolio.community.poke.site` at the Vercel project and let Vercel
-   provision TLS.
+- Live URL: https://communitypokeorg.github.io/community-poke-portfolio/
+- Pages is configured with `build_type: workflow`; the workflow builds `dist/`
+  with `VITE_BASE=/community-poke-portfolio/` and publishes it with
+  `actions/deploy-pages`.
+
+### Custom domain
+
+`portfolio.community.poke.site` is the intended canonical domain, but the DNS
+for `community.poke.site` is owned elsewhere and currently points at Vercel.
+To switch it to this Pages deployment, the **domain owner** (whoever controls
+DNS for `community.poke.site`) must:
+
+1. Replace the existing Vercel-pointed record with a CNAME record:
+   `portfolio.community.poke.site` → `communitypokeorg.github.io`
+2. In this repo, set the custom domain under **Settings → Pages**, or via API:
+   ```bash
+   curl -X PUT -H "Authorization: Bearer $TOKEN" \
+     https://api.github.com/repos/CommunityPokeOrg/community-poke-portfolio/pages \
+     -d '{"cname":"portfolio.community.poke.site"}'
+   ```
+   then enable **Enforce HTTPS** once the certificate is issued.
+3. Change `VITE_BASE` in `.github/workflows/deploy.yml` from
+   `/community-poke-portfolio/` to `/` so asset paths resolve at the domain
+   root.
 
 ## Backup & mirror plan
 
